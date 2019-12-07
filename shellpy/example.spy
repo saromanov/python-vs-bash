@@ -1,0 +1,15 @@
+#!/usr/bin/env shellpy
+"""
+This script downloads avatar of github user 'python' with curl
+"""
+
+import json
+import os
+import tempfile
+
+# get the api answer with curl
+answer = `curl https://api.github.com/users/python
+
+answer_json = json.loads(answer.stdout)
+avatar_url = answer_json['avatar_url']
+print(avatar_url)

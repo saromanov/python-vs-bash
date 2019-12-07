@@ -9,7 +9,7 @@ def execute_list_of_users():
 
 def execute_list_of_users_read():
     data = open('/etc/passwd')
-    print(list(filter(lambda x: x.split()[0], data.readlines())))
+    print(list(map(lambda x: x.split(':')[0], data.readlines())))
     data.close()
 
 execute_list_of_users_read()

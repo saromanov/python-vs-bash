@@ -20,8 +20,8 @@ def check_exist_user(user):
     if user is None:
         raise Exception('user is not defined')
     f = open('/etc/passwd')
-    data = data.readlines()
+    data = f.readlines()
     f.close()
-    return x for x in data if x.split(':') == user
+    return len([x for x in data if x.split(':')[0] == user]) > 0
 
-check_exist_user('postgres')
+print(check_exist_user('postgres'))

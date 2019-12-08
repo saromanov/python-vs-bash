@@ -1,4 +1,4 @@
-from sh import ls, sed
+from sh import ls, sed, awk, df, grep
 
 def get_file_names(path='.'):
     '''
@@ -8,3 +8,6 @@ def get_file_names(path='.'):
      will check how piping looks like
     '''
     return sed(ls(path, "-l"), "-E", "-e", '1d; s/^([^ ]+ +){8}//' )
+
+def disk_space_monitoring():
+    output = awk(grep(df('-Ph'), "-vE '^Filesystem|tmpfs'"), '{ print $5,$1 }')

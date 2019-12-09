@@ -9,8 +9,13 @@ def get_file_names(path='.'):
     '''
     return sed(ls(path, "-l"), "-E", "-e", '1d; s/^([^ ]+ +){8}//' )
 
-def disk_space_monitoring():
+def disk_space_monitoring(perc):
     output = awk(grep(df('-Ph'), "-vE",  "'^Filesystem|tmpfs'"), '{ print $5,$1 }')
-    return output
-
-disk_space_monitoring()
+    for data in output:
+        splitter = data.split('%')[0]
+        try:
+            perc_data = int(splitter)
+            if perc_data > perc:
+                print(data)
+        except:
+            continue

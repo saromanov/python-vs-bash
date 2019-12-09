@@ -1,4 +1,4 @@
-from sh import ls, sed, awk, df, grep
+from sh import ls, sed, awk, df, grep, wc
 
 def get_file_names(path='.'):
     '''
@@ -10,4 +10,8 @@ def get_file_names(path='.'):
     return sed(ls(path, "-l"), "-E", "-e", '1d; s/^([^ ]+ +){8}//' )
 
 def disk_space_monitoring():
-    output = awk(grep(df('-Ph'), "-vE '^Filesystem|tmpfs'"), '{ print $5,$1 }')
+    '''output = awk(grep(df('-Ph'), "-vE ^Filesystem|tmpfs"), '{ print $5,$1 }')'''
+    output = grep(df('-Ph'), "-vE",  "'^Filesystem|tmpfs'")
+    print(output)
+
+disk_space_monitoring()
